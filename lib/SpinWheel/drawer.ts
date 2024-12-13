@@ -1,4 +1,4 @@
-import { SpinWheelProp, Option } from ".";
+import type { Option, SpinWheelProp } from ".";
 
 const DEFAULT_TEXT_COLOR = "#FFFFFF" as const;
 const DEFAULT_CENTER_CIRCLE_COLOR = "#E34234" as const;

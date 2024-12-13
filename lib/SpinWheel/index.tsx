@@ -5,7 +5,7 @@ import React, {
 	useMemo,
 	useCallback,
 } from "react";
-import { drawWheelWithBorders, drawArrow } from "./drawer";
+import { drawArrow, drawWheelWithBorders } from "./drawer";
 
 /**
  * Option interface
