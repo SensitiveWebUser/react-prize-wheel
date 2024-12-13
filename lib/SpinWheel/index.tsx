@@ -57,13 +57,15 @@ export function SpinWheel({
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const arrowCanvasRef = useRef<HTMLCanvasElement>(null);
 	const totalRotation = useMemo(() => spinCount * 360, [spinCount]);
-	const anglePerOption = useMemo(() => 360 / options.length, [options]);
-	const SpinerSize = styles?.size || 400;
+	const anglePerOption = useMemo(() => 360 / options.length, [options.length]);
+	const SpinnerSize = styles?.size || 400;
 
 	const calculateFinalRotation = useCallback(
 		(winningIndex: number) => {
-			const optionToGo = winningIndex * anglePerOption;
-			return { finalRotation: -(totalRotation + optionToGo), optionToGo };
+			const optionToGo =
+				360 -
+				(winningIndex !== options.length ? anglePerOption * winningIndex : 0);
+			return { finalRotation: totalRotation + optionToGo, optionToGo };
 		},
 		[anglePerOption, options.length, totalRotation],
 	);
@@ -72,13 +74,19 @@ export function SpinWheel({
 		setIsSpinning(true);
 
 		const winningIndex = Math.floor(Math.random() * options.length);
+
 		const { finalRotation, optionToGo } = calculateFinalRotation(winningIndex);
 		setRotation(finalRotation);
 
 		setTimeout(() => {
-			OnSpinCompleted?.(options[winningIndex] as Option);
+			setRotation(optionToGo);
 			setIsSpinning(false);
-			setRotation(-optionToGo);
+			OnSpinCompleted?.(options[winningIndex] as Option);
+
+			// Reset rotation after a short delay
+			setTimeout(() => {
+				setRotation(0);
+			}, 5);
 		}, spinTime);
 	};
 
@@ -89,7 +97,9 @@ export function SpinWheel({
 		if (arrowCanvas) drawArrow(arrowCanvas, styles);
 	}, [options, styles]);
 
-	if (startSpin && !isSpinning) handleSpinClick();
+	useEffect(() => {
+		if (startSpin && !isSpinning) handleSpinClick();
+	}, [startSpin]);
 
 	return (
 		<div
@@ -101,14 +111,14 @@ export function SpinWheel({
 			<div
 				style={{
 					position: "relative",
-					width: SpinerSize,
-					height: SpinerSize,
+					width: SpinnerSize,
+					height: SpinnerSize,
 				}}
 			>
 				<canvas
 					ref={canvasRef}
-					width={SpinerSize}
-					height={SpinerSize}
+					width={SpinnerSize}
+					height={SpinnerSize}
 					style={{
 						transition: isSpinning
 							? `transform ${spinTime / 1000}s ease-out`
@@ -121,8 +131,8 @@ export function SpinWheel({
 				/>
 				<canvas
 					ref={arrowCanvasRef}
-					width={SpinerSize}
-					height={SpinerSize}
+					width={SpinnerSize}
+					height={SpinnerSize}
 					style={{
 						position: "absolute",
 						top: "50%",
