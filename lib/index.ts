@@ -1,1 +1,1 @@
-export { SpinWheel, type SpinWheelProp, Option } from "./SpinWheel";
+export { SpinWheel, type SpinWheelProp, type Option } from "./SpinWheel";
