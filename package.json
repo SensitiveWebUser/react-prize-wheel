@@ -2,7 +2,7 @@
 	"name": "react-prize-wheel",
 	"author": "SensitiveWebUser",
 	"private": false,
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"type": "module",
 	"tags": [
 		"react",
@@ -31,8 +31,8 @@
 	],
 	"exports": {
 		".": {
-			"types": "./dist/lib/main.d.ts",
-			"default": "./dist/main.js"
+			"types": "./dist/lib/index.d.ts",
+			"default": "./dist/index.js"
 		}
 	},
 	"files": [
@@ -70,5 +70,8 @@
 		"vite": "^6.0.3",
 		"vite-plugin-dts": "^4.3.0",
 		"vite-plugin-lib-inject-css": "^2.1.1"
+	},
+	"dependencies": {
+		"react-prize-wheel": "^1.0.0"
 	}
 }
