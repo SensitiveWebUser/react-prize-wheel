@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SpinWheel, Option } from "react-prize-wheel";
+import { SpinWheel, Option } from "../dist";
 
 function App() {
 	const [spin, setSpin] = useState(false);
