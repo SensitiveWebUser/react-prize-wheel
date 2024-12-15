@@ -30,7 +30,7 @@ const WheelDisplay: React.FC<WheelDisplayProps> = ({
 	setSpin,
 }) => {
 	return (
-		<div style={{ flex: 1, padding: "20px" }}>
+		<div>
 			<SpinWheel
 				options={options}
 				startSpin={spin}
