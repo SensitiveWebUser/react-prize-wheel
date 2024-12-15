@@ -48,6 +48,7 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc -b ./tsconfig.lib.json && vite build",
+		"build:watch": "tsc -b ./tsconfig.lib.json --watch",
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"prepublishOnly": "npm run build",
 		"preview": "vite preview"
@@ -58,7 +59,6 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
-		"@eslint/js": "^9.16.0",
 		"@types/node": "^22.10.2",
 		"@types/react": "^19.0.1",
 		"@types/react-dom": "^19.0.2",
@@ -70,8 +70,5 @@
 		"vite": "^6.0.3",
 		"vite-plugin-dts": "^4.3.0",
 		"vite-plugin-lib-inject-css": "^2.1.1"
-	},
-	"dependencies": {
-		"react-prize-wheel": "^1.0.0"
 	}
 }
