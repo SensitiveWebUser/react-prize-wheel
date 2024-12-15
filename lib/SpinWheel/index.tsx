@@ -23,7 +23,7 @@ export interface Option {
  * @param styles - Styles for the wheel
  * @param spinTime - Time to spin the wheel
  * @param spinCount - Number of spins
- * @param OnSpinCompleted - Callback function when spinning is completed
+ * @param onSpinCompleted - Callback function when spinning is completed
  * @returns SpinWheel component
  */
 export interface SpinWheelProp {
@@ -31,7 +31,7 @@ export interface SpinWheelProp {
 	startSpin: boolean;
 	styles?: {
 		size?: number;
-		segmentColors?: string[] | CanvasGradient[] | CanvasPattern[];
+		segmentColors?: (string | CanvasGradient | CanvasPattern)[];
 		textColor?: string | CanvasGradient | CanvasPattern;
 		textAlign?: CanvasTextAlign;
 		borderWidth?: number;
@@ -41,7 +41,7 @@ export interface SpinWheelProp {
 	};
 	spinTime?: number;
 	spinCount?: number;
-	OnSpinCompleted?: (option: Option) => void;
+	onSpinCompleted?: (option: Option) => void;
 }
 
 export function SpinWheel({
@@ -50,7 +50,7 @@ export function SpinWheel({
 	styles,
 	spinTime = 5000,
 	spinCount = 10,
-	OnSpinCompleted,
+	onSpinCompleted,
 }: SpinWheelProp) {
 	const [isSpinning, setIsSpinning] = useState(false);
 	const [rotation, setRotation] = useState(0);
@@ -81,7 +81,7 @@ export function SpinWheel({
 		setTimeout(() => {
 			setRotation(optionToGo);
 			setIsSpinning(false);
-			OnSpinCompleted?.(options[winningIndex] as Option);
+			onSpinCompleted?.(options[winningIndex] as Option);
 		}, spinTime);
 	};
 
