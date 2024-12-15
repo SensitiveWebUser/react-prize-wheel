@@ -82,11 +82,6 @@ export function SpinWheel({
 			setRotation(optionToGo);
 			setIsSpinning(false);
 			OnSpinCompleted?.(options[winningIndex] as Option);
-
-			// Reset rotation after a short delay
-			setTimeout(() => {
-				setRotation(0);
-			}, 5);
 		}, spinTime);
 	};
 
