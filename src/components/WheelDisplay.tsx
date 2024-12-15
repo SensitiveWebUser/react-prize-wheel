@@ -1,5 +1,5 @@
 import React from "react";
-import { SpinWheel, Option } from "../../dist";
+import { SpinWheel, Option } from "react-prize-wheel";
 
 interface WheelDisplayProps {
 	options: Option[];
@@ -37,7 +37,7 @@ const WheelDisplay: React.FC<WheelDisplayProps> = ({
 				styles={wheelStyles}
 				spinTime={spinTime}
 				spinCount={spinCount}
-				OnSpinCompleted={OnSpinCompleted}
+				onSpinCompleted={OnSpinCompleted}
 			/>
 			<button
 				onClick={() => setSpin(true)}

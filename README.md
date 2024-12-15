@@ -1,14 +1,10 @@
 # React Prize Wheel
 
-![Wheel GIF](path-to-your-gif.gif)
+![Wheel GIF](wheel.gif)
 
 ## Overview
 
 The React Prize Wheel is a customizable and interactive spinning wheel component built with React and TypeScript. It allows you to create a prize wheel with various options and spin it to select a random prize.
-
-## Demo
-
-You can see a live demo of the React Prize Wheel [here](link-to-demo-page).
 
 ## Getting Started
 

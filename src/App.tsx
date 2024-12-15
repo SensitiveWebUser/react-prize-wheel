@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Option } from "../dist/lib";
+import { Option } from "react-prize-wheel";
 import WheelDisplay from "./components/WheelDisplay";
 import SpinWheelCustomiser from "./components/SpinWheelCustomiser";
 
