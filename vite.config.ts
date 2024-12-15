@@ -16,7 +16,7 @@ export default defineConfig({
 		}),
 	],
 	build: {
-		copyPublicDir: false,
+		copyPublicDir: true, // Ensure this is set to true
 		lib: {
 			entry: resolve(__dirname, "lib/main.ts"),
 			formats: ["es"],
@@ -44,4 +44,5 @@ export default defineConfig({
 			},
 		},
 	},
+	publicDir: "public", // Ensure this is set to the public directory
 });
