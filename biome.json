@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
 	"vcs": {
 		"enabled": false,
 		"clientKind": "git",
@@ -7,22 +7,21 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": [
-			"tsconfig.*.json",
-			"node_modules",
-			"dist",
-			"coverage",
-			"*.log",
-			"*.lock"
+		"includes": [
+			"**",
+			"!**/tsconfig.*.json",
+			"!**/node_modules",
+			"!**/dist",
+			"!**/coverage",
+			"!**/*.log",
+			"!**/*.lock"
 		]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab"
 	},
-	"organizeImports": {
-		"enabled": true
-	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
@@ -33,8 +32,7 @@
 				"useOptionalChain": "error"
 			},
 			"correctness": {
-				"noUnusedVariables": "off",
-				"useArrayLiterals": "off"
+				"noUnusedVariables": "off"
 			},
 			"style": {
 				"noInferrableTypes": "error",
@@ -42,7 +40,8 @@
 				"useAsConstAssertion": "error",
 				"useConsistentArrayType": "off",
 				"useForOf": "error",
-				"useShorthandFunctionType": "error"
+				"useShorthandFunctionType": "error",
+				"useArrayLiterals": "off"
 			},
 			"suspicious": {
 				"noEmptyBlockStatements": "error",
@@ -54,9 +53,7 @@
 				"useNamespaceKeyword": "error"
 			}
 		},
-		"ignore": [
-			"dist"
-		]
+		"includes": ["**", "!**/dist"]
 	},
 	"javascript": {
 		"formatter": {
@@ -65,16 +62,13 @@
 	},
 	"overrides": [
 		{
-			"include": [
-				"**/*.{ts,tsx}"
-			],
+			"includes": ["**/*.{ts,tsx}"],
 			"linter": {
 				"rules": {
 					"complexity": {
 						"noExtraBooleanCast": "error",
-						"noMultipleSpacesInRegularExpressionLiterals": "error",
 						"noUselessCatch": "error",
-						"noWith": "error"
+						"noAdjacentSpacesInRegex": "error"
 					},
 					"correctness": {
 						"noConstAssign": "error",
@@ -99,7 +93,8 @@
 						"noUnusedVariables": "error",
 						"useIsNan": "error",
 						"useValidForDirection": "error",
-						"useYield": "error"
+						"useYield": "error",
+						"useValidTypeof": "error"
 					},
 					"suspicious": {
 						"noAsyncPromiseExecutor": "error",
@@ -124,23 +119,19 @@
 						"noSparseArray": "error",
 						"noUnsafeNegation": "error",
 						"useGetterReturn": "error",
-						"useValidTypeof": "error"
+						"noWith": "error"
 					}
 				}
 			}
 		},
 		{
-			"include": [
-				"**/*.{ts,tsx}"
-			],
+			"includes": ["**/*.{ts,tsx}"],
 			"javascript": {
 				"globals": []
 			}
 		},
 		{
-			"include": [
-				"**/*.{ts,tsx}"
-			],
+			"includes": ["**/*.{ts,tsx}"],
 			"linter": {
 				"rules": {
 					"correctness": {
@@ -148,15 +139,12 @@
 						"noGlobalObjectCalls": "off",
 						"noInvalidBuiltinInstantiation": "off",
 						"noInvalidConstructorSuper": "off",
-						"noNewSymbol": "off",
 						"noSetterReturn": "off",
 						"noUndeclaredVariables": "off",
 						"noUnreachable": "off",
 						"noUnreachableSuper": "off"
 					},
 					"style": {
-						"noArguments": "error",
-						"noVar": "error",
 						"useConst": "error"
 					},
 					"suspicious": {
@@ -168,27 +156,29 @@
 						"noImportAssign": "off",
 						"noRedeclare": "off",
 						"noUnsafeNegation": "off",
-						"useGetterReturn": "off"
+						"useGetterReturn": "off",
+						"noVar": "error"
+					},
+					"complexity": {
+						"noArguments": "error"
 					}
 				}
 			}
 		},
 		{
-			"include": [
-				"**/*.{ts,tsx}"
-			],
+			"includes": ["**/*.{ts,tsx}"],
 			"linter": {
 				"rules": {
 					"complexity": {
 						"noUselessTypeConstraint": "error"
 					},
 					"correctness": {
-						"noUnusedVariables": "error",
-						"useArrayLiterals": "off"
+						"noUnusedVariables": "error"
 					},
 					"style": {
 						"noNamespace": "error",
-						"useAsConstAssertion": "error"
+						"useAsConstAssertion": "error",
+						"useArrayLiterals": "off"
 					},
 					"suspicious": {
 						"noExplicitAny": "error",
@@ -201,9 +191,7 @@
 			}
 		},
 		{
-			"include": [
-				"**/*.{ts,tsx}"
-			],
+			"includes": ["**/*.{ts,tsx}"],
 			"javascript": {
 				"globals": [
 					"onscrollend",
