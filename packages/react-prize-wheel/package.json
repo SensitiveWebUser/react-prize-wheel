@@ -24,8 +24,7 @@
     "check": "biome check src",
     "check:fix": "biome check --write src",
     "type-check": "tsc --noEmit",
-    "size-check": "size-limit",
-    "prepublishOnly": "pnpm run build"
+    "size-check": "size-limit"
   },
   "keywords": [
     "react",
