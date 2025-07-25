@@ -1,5 +1,8 @@
 /**
  * Represents a single segment of the wheel
+ * 
+ * @since 2025-07-25
+ * @interface WheelSegment
  */
 export interface WheelSegment {
   /** Unique identifier for the segment */
@@ -22,6 +25,9 @@ export interface WheelSegment {
 
 /**
  * Result of a spin operation
+ * 
+ * @since 2025-07-25
+ * @interface SpinResult
  */
 export interface SpinResult {
   /** The selected segment */
@@ -76,6 +82,9 @@ export interface WheelTheme {
 
 /**
  * Main props for the SpinWheel component
+ * 
+ * @since 2025-07-25
+ * @interface SpinWheelProps
  */
 export interface SpinWheelProps {
   /** Array of segments to display on the wheel */
@@ -97,7 +106,7 @@ export interface SpinWheelProps {
   /** Custom CSS class name */
   className?: string;
   /** Custom inline styles */
-  style?: { [key: string]: string | number };
+  style?: { [key: string]: string | number; };
   /** Whether to show the spin button (default: true) */
   showSpinButton?: boolean;
   /** Custom spin button text */
@@ -112,6 +121,9 @@ export interface SpinWheelProps {
  * @description Represents the current state of the spinning wheel including
  * rotation position, animation status, and timing information. Used internally
  * by the useSpinWheel hook for state management.
+ * 
+ * @since 2025-07-25
+ * @interface WheelState
  */
 export interface WheelState {
   /** Current rotation angle in degrees */

@@ -5,6 +5,8 @@ import { validateSegments } from '../utils/validation';
 
 /**
  * Configuration options for the useSpinWheel hook
+ * 
+ * @interface UseSpinWheelOptions
  */
 interface UseSpinWheelOptions {
   /** Array of wheel segments to display */
@@ -19,6 +21,8 @@ interface UseSpinWheelOptions {
   disabled?: boolean;
   /** Predefined result for testing (segment index or ID) */
   predefinedResult?: number | string;
+  /** Pointer position for calculating results */
+  pointerPosition?: 'top' | 'right' | 'bottom' | 'left';
 }
 
 /**
@@ -29,6 +33,9 @@ interface UseSpinWheelOptions {
  * - Animation with customizable easing and duration
  * - Weighted random selection with validation
  * - Segment validation and error handling
+ *
+ * @since 2025-07-25
+ * @version 1.0.0
  *
  * @example
  * ```tsx
@@ -52,6 +59,7 @@ export function useSpinWheel({
   onSpinComplete,
   disabled = false,
   predefinedResult,
+  pointerPosition = 'top',
 }: UseSpinWheelOptions) {
   const defaultAnimation: AnimationConfig = useMemo(
     () => ({
@@ -80,6 +88,7 @@ export function useSpinWheel({
 
   /**
    * Calculates the target segment for the spin result
+   * 
    * @description Determines which segment should be selected based on predefined result
    * or weighted random selection. Handles both segment ID strings and numeric indices.
    * @returns Object containing target segment and its index
@@ -89,20 +98,33 @@ export function useSpinWheel({
       if (typeof predefinedResult === 'string') {
         const targetIndex = segments.findIndex(s => s.id === predefinedResult);
         if (targetIndex !== -1) {
-          return { targetIndex, targetSegment: segments[targetIndex]! };
+          /** Check if target segment is disabled */
+          if (segments[targetIndex]?.disabled) {
+            console.warn(`Predefined result segment "${predefinedResult}" is disabled, using random selection`);
+          } else {
+            return { targetIndex, targetSegment: segments[targetIndex]! };
+          }
+        } else {
+          console.warn(`Predefined result segment "${predefinedResult}" not found, using random selection`);
         }
       } else if (
         typeof predefinedResult === 'number' &&
         predefinedResult >= 0 &&
         predefinedResult < segments.length
       ) {
-        return {
-          targetIndex: predefinedResult,
-          targetSegment: segments[predefinedResult]!,
-        };
+        /** Check if target segment is disabled */
+        if (segments[predefinedResult]?.disabled) {
+          console.warn(`Predefined result segment at index ${predefinedResult} is disabled, using random selection`);
+        } else {
+          return {
+            targetIndex: predefinedResult,
+            targetSegment: segments[predefinedResult]!,
+          };
+        }
       }
     }
 
+    /** Fall back to weighted random selection */
     const selection = getWeightedSegment(segments);
     return {
       targetIndex: selection.index,
@@ -112,9 +134,10 @@ export function useSpinWheel({
 
   /**
    * Applies easing function to animation progress
+   * 
    * @param progress - Animation progress value between 0 and 1
    * @param easing - Type of easing function to apply
-   * @returns Eased progress value
+   * @returns Eased progress value between 0 and 1
    */
   const applyEasing = useCallback((progress: number, easing: string): number => {
     switch (easing) {
@@ -133,6 +156,7 @@ export function useSpinWheel({
 
   /**
    * Animation frame function that handles the spinning animation
+   * 
    * @param currentTime - Current timestamp from requestAnimationFrame
    * @description Updates wheel rotation using easing functions and manages animation lifecycle.
    * Triggers completion callback when animation finishes and calculates final result.
@@ -161,7 +185,28 @@ export function useSpinWheel({
         animationFrameRef.current = requestAnimationFrame(animate);
       } else {
         const finalAngle = currentRotation % 360;
-        const result = getSegmentAtAngle(segments, finalAngle);
+        const result = getSegmentAtAngle(segments, finalAngle, pointerPosition);
+
+        /** If result is a disabled segment, re-spin automatically */
+        if (result.segment.disabled) {
+
+          /** Reset for re-spin with shorter duration and fewer spins */
+          const reSpinTarget = calculateTarget();
+          const reSpinAngle = calculateTargetAngle(
+            segments,
+            reSpinTarget.targetIndex,
+            2, /** Fewer spins for re-spin */
+            pointerPosition
+          );
+
+          startTimeRef.current = 0;
+          startRotationRef.current = currentRotation;
+          targetRotationRef.current = currentRotation + reSpinAngle;
+
+          /** Continue animation for re-spin */
+          animationFrameRef.current = requestAnimationFrame(animate);
+          return;
+        }
 
         const spinResult: SpinResult = {
           segment: result.segment,
@@ -181,11 +226,12 @@ export function useSpinWheel({
         onSpinComplete?.(spinResult);
       }
     },
-    [defaultAnimation, segments, onSpinComplete, applyEasing]
+    [defaultAnimation, segments, onSpinComplete, applyEasing, pointerPosition, calculateTarget]
   );
 
   /**
    * Initiates a spin of the wheel
+   * 
    * @description Starts the spinning animation by calculating target rotation,
    * setting up animation parameters, and beginning the animation loop.
    * Handles disabled state and validation checks.
@@ -196,7 +242,7 @@ export function useSpinWheel({
     }
 
     const { targetIndex } = calculateTarget();
-    const targetAngle = calculateTargetAngle(segments, targetIndex, defaultAnimation.spins);
+    const targetAngle = calculateTargetAngle(segments, targetIndex, defaultAnimation.spins, pointerPosition);
 
     startTimeRef.current = 0;
     startRotationRef.current = state.rotation;
@@ -219,12 +265,14 @@ export function useSpinWheel({
     calculateTarget,
     segments,
     defaultAnimation,
+    pointerPosition,
     onSpinStart,
     animate,
   ]);
 
   /**
    * Stops the current animation and cleans up animation frame
+   * 
    * @description Cancels any running animation frame to prevent memory leaks
    * and ensure proper cleanup when component unmounts or animation is interrupted.
    */
@@ -237,6 +285,7 @@ export function useSpinWheel({
 
   /**
    * Resets the wheel to its initial state
+   * 
    * @description Stops any running animation and resets all state values
    * including rotation, spinning status, and last result.
    */

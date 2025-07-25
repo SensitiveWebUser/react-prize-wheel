@@ -4,12 +4,15 @@ import type { PointerConfig, SpinWheelProps, WheelTheme } from '../types';
 import { calculateSegmentAngles, getContrastColor } from '../utils/validation';
 
 /**
- * SpinWheel - A customizable, prize wheel component
+ * SpinWheel - A customizable prize wheel component
  *
  * @description Creates an interactive spinning wheel with segments that can be customized
  * with different colors, weights, and text. Supports animation configuration, themes,
  * and various pointer styles. Uses HTML5 Canvas for optimal performance.
  *
+ * @since 2025-07-25
+ * @version 1.0.0
+ * 
  * @example
  * ```tsx
  * const segments = [
@@ -25,7 +28,7 @@ import { calculateSegmentAngles, getContrastColor } from '../utils/validation';
  * ```
  *
  * @param props - Configuration props for the spin wheel
- * @returns React functional component rendering the interactive spin wheel
+ * @returns JSX element rendering the interactive spin wheel
  */
 export function SpinWheel({
   segments,
@@ -66,6 +69,7 @@ export function SpinWheel({
   const { rotation, isSpinning, lastResult, isValid, validationErrors, spin } = useSpinWheel({
     segments,
     animation,
+    pointerPosition: defaultPointer.position,
     ...(onSpinStart && { onSpinStart }),
     ...(onSpinComplete && { onSpinComplete }),
     disabled,
@@ -78,9 +82,10 @@ export function SpinWheel({
 
   /**
    * Draws the pointer/indicator on the wheel
+   * 
    * @param ctx - Canvas 2D rendering context
    * @param centerX - Center X coordinate of the wheel
-   * @param centerY - Center Y coordinate of the wheel
+   * @param centerY - Center Y coordinate of the wheel  
    * @param radius - Radius of the wheel
    */
   const drawPointer = React.useCallback(
@@ -109,13 +114,25 @@ export function SpinWheel({
 
       switch (style) {
         case 'arrow':
+          // Arrow pointing toward the wheel (tip at pointerY + pointerSize)
+          ctx.moveTo(0, pointerY + pointerSize);
+          ctx.lineTo(-pointerSize / 4, pointerY + pointerSize * 2 / 3);
+          ctx.lineTo(-pointerSize / 8, pointerY + pointerSize * 2 / 3);
+          ctx.lineTo(-pointerSize / 8, pointerY);
+          ctx.lineTo(pointerSize / 8, pointerY);
+          ctx.lineTo(pointerSize / 8, pointerY + pointerSize * 2 / 3);
+          ctx.lineTo(pointerSize / 4, pointerY + pointerSize * 2 / 3);
+          ctx.lineTo(0, pointerY + pointerSize);
+          break;
         case 'triangle':
+          // Triangle pointing toward the wheel (tip at pointerY + pointerSize)
           ctx.moveTo(0, pointerY + pointerSize);
           ctx.lineTo(-pointerSize / 2, pointerY);
           ctx.lineTo(pointerSize / 2, pointerY);
+          ctx.lineTo(0, pointerY + pointerSize);
           break;
         case 'circle':
-          ctx.arc(0, pointerY, pointerSize / 2, 0, 2 * Math.PI);
+          ctx.arc(0, pointerY + pointerSize / 2, pointerSize / 2, 0, 2 * Math.PI);
           break;
       }
 
@@ -127,13 +144,14 @@ export function SpinWheel({
   );
 
   /**
-   * Wraps text to fit within the segment boundaries
+   * Wraps text to fit within segment boundaries with proper line breaks
+   * 
    * @param ctx - Canvas 2D rendering context
-   * @param text - Text to wrap
+   * @param text - Text content to wrap
    * @param x - X coordinate for text positioning
    * @param y - Y coordinate for text positioning
    * @param maxWidth - Maximum width allowed for text
-   * @param lineHeight - Height between lines
+   * @param lineHeight - Height between text lines
    */
   const wrapText = React.useCallback(
     (
@@ -171,8 +189,9 @@ export function SpinWheel({
   );
 
   /**
-   * Main function to draw the entire wheel with all segments, text, and pointer
-   * @description Renders the wheel to the canvas including all segments with their colors,
+   * Renders the complete wheel with all segments, text, and pointer
+   * 
+   * @description Draws the wheel to the canvas including all segments with their colors,
    * text labels, borders, and the pointer indicator. Handles text positioning and
    * rotation to match the segment layout.
    */

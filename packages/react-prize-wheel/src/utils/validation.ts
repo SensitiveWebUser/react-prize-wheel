@@ -7,6 +7,9 @@ import type { WheelSegment } from '../types';
  * normalizes whitespace by collapsing multiple spaces into single spaces, and limits
  * text length to prevent excessive content.
  *
+ * @since 2025-07-25
+ * @version 1.0.0
+ *
  * @param text - Raw text input to sanitize
  * @returns Sanitized and normalized text string (max 100 characters)
  *
@@ -17,7 +20,7 @@ import type { WheelSegment } from '../types';
  * ```
  */
 export function sanitizeText(text: string): string {
-  // Handle non-string inputs
+  /** Handle non-string inputs */
   if (typeof text !== 'string' || text === null || text === undefined) {
     return '';
   }
@@ -27,7 +30,7 @@ export function sanitizeText(text: string): string {
     .replace(/&/g, ' ')     // Replace & with space to maintain spacing
     .replace(/\s+/g, ' ')   // Normalize whitespace
     .trim()
-    .substring(0, 100);     // Limit to 100 characters
+    .substring(0, 100);     /** Limit to 100 characters */
 }
 
 /**
@@ -38,6 +41,9 @@ export function sanitizeText(text: string): string {
  * - RGB/RGBA functions (rgb(255,0,0), rgba(255,0,0,0.5))
  * - HSL/HSLA functions (hsl(0,100%,50%), hsla(0,100%,50%,0.5))
  * - Named colors (red, blue, etc.)
+ *
+ * @since 2025-07-25
+ * @version 1.0.0
  *
  * @param color - Color string to validate
  * @returns True if the color is valid, false otherwise
@@ -68,6 +74,9 @@ export function validateColor(color: string): boolean {
  * - Duplicate ID detection
  * - Weight value validation
  * - Text content sanitization
+ *
+ * @since 2025-07-25
+ * @version 1.0.0
  *
  * @param segments - Array of wheel segments to validate
  * @returns Object containing validation status and error messages
@@ -140,6 +149,9 @@ export function validateSegments(segments: WheelSegment[]): {
  * @description Uses luminance calculation to determine whether black or white text
  * would provide better contrast on the given background color. Assumes hex color input.
  *
+ * @since 2025-07-25
+ * @version 1.0.0
+ *
  * @param backgroundColor - Hex color string (e.g., '#ff0000')
  * @returns '#000000' for light backgrounds, '#ffffff' for dark backgrounds
  *
@@ -165,6 +177,9 @@ export function getContrastColor(backgroundColor: string): string {
  * @description Computes proportional angles for wheel segments based on their weight values.
  * Segments with higher weights will occupy larger portions of the wheel. Total angles
  * always sum to 360 degrees.
+ *
+ * @since 2025-07-25
+ * @version 1.0.0
  *
  * @param segments - Array of wheel segments with optional weight properties
  * @returns Array of angles in degrees corresponding to each segment

@@ -7,7 +7,7 @@ describe('Validation Utils', () => {
     it('should remove dangerous characters', () => {
       expect(sanitizeText('<script>alert("xss")</script>')).toBe('scriptalert(xss)/script');
       expect(sanitizeText('Safe text')).toBe('Safe text');
-      expect(sanitizeText('Text & symbols')).toBe('Text  symbols');
+      expect(sanitizeText('Text & symbols')).toBe('Text symbols');
     });
 
     it('should handle non-string inputs', () => {

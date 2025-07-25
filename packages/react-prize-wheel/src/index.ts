@@ -10,6 +10,7 @@
  * - TypeScript support with comprehensive type definitions
  *
  * @author SensitiveWebUser
+ * @since 2025-07-25
  * @version 1.0.0
  *
  * @example
@@ -32,10 +33,13 @@
  * ```
  */
 
+/** Main component export */
 export { SpinWheel } from './components/SpinWheel';
 
+/** Hook export for advanced usage */
 export { useSpinWheel } from './hooks/useSpinWheel';
 
+/** Type definitions for TypeScript users */
 export type {
   AnimationConfig,
   PointerConfig,
@@ -45,10 +49,12 @@ export type {
   WheelTheme,
 } from './types';
 
+/** Utility functions for custom implementations */
 export {
   calculateTargetAngle,
   getSegmentAtAngle,
   getWeightedSegment,
 } from './utils/selection';
 
+/** Library version */
 export const VERSION = '1.0.0';
