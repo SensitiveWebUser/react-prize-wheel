@@ -11,12 +11,14 @@
  * - External peer dependencies (React, React DOM)
  * - Source maps for debugging
  * - Minification for production builds
+ * - Copies README.md, CHANGELOG.md, LICENSE, wheel.gif to dist for npm publishing
  */
 
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
+import copy from 'rollup-plugin-copy';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 export default {
@@ -46,6 +48,15 @@ export default {
       outDir: 'dist',
     }),
     terser(),
+    copy({
+      targets: [
+        { src: '../../LICENSE', dest: 'dist' },
+        { src: '../../wheel.gif', dest: 'dist' },
+        { src: '../../CHANGELOG.md', dest: 'dist' },
+        { src: '../../README.md', dest: 'dist' },
+      ],
+      hook: 'writeBundle',
+    }),
   ],
   external: ['react', 'react-dom'],
 };
