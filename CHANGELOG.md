@@ -10,21 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Complete rebuild with modern React architecture
-- Comprehensive internationalization (i18n) support for 18+ languages
-- WCAG 2.1 AA accessibility compliance
-- TypeScript support with 100% type coverage
-- Hardware-accelerated animations with 60fps performance
+- TypeScript support
 - Responsive design for all device sizes
 - RTL language support (Arabic, Urdu)
 - Advanced customization options
-- Touch gesture support for mobile devices
 - Screen reader support and ARIA labels
-- Dark/light mode support with auto-detection
-- Keyboard navigation support
+- Dark/light mode support with auto-detection for text and background colors
 - Memory leak prevention and garbage collection optimization
 - Tree-shakeable architecture
 - Comprehensive test suite with high coverage
-- Storybook documentation and examples
 - Bundle size optimization (< 100KB gzipped)
 
 ### Changed
@@ -44,7 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated all dependencies to latest secure versions
 - Implemented input validation and sanitization
-- Added CSP (Content Security Policy) compliance
 
 ### Performance
 
