@@ -25,6 +25,8 @@ This project uses a monorepo structure with pnpm workspaces:
 
 ### Installation
 
+#### Using pnpm (recommended)
+
 ```bash
 # Clone the repository
 git clone https://github.com/SensitiveWebUser/react-prize-wheel.git
@@ -34,7 +36,32 @@ cd react-prize-wheel
 pnpm install
 ```
 
+#### Using npm
+
+```bash
+# Clone the repository
+git clone https://github.com/SensitiveWebUser/react-prize-wheel.git
+cd react-prize-wheel
+
+# Install dependencies
+npm install
+```
+
+#### Using yarn
+
+```bash
+# Clone the repository
+git clone https://github.com/SensitiveWebUser/react-prize-wheel.git
+cd react-prize-wheel
+
+# Install dependencies
+yarn install
+```
+
 ### Development
+
+> **Note for npm/yarn users:**
+> Replace `pnpm` with `npm run` or `yarn run` in the commands below. For example, use `npm run dev:demo` or `yarn run dev:demo` instead of `pnpm run dev:demo`.
 
 ```bash
 # Start the demo application
@@ -122,6 +149,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🤝 Support
 
-- 📧 Email: [Create an issue](https://github.com/SensitiveWebUser/react-prize-wheel/issues)
-- 🐛 Bug Reports: [GitHub Issues](https://github.com/SensitiveWebUser/react-prize-wheel/issues)
-- 💡 Feature Requests: [GitHub Discussions](https://github.com/SensitiveWebUser/react-prize-wheel/discussions)
+- Contact, Bug Reports, Feature Requests: [GitHub Issues](https://github.com/SensitiveWebUser/react-prize-wheel/issues)
