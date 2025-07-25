@@ -1,0 +1,85 @@
+{
+  "name": "@sensitiveweb/react-prize-wheel",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "A simple, performant React prize wheel component",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "lint": "biome lint src",
+    "lint:fix": "biome lint --write src",
+    "format": "biome format --write src",
+    "check": "biome check src",
+    "check:fix": "biome check --write src",
+    "type-check": "tsc --noEmit",
+    "size-check": "size-limit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "react",
+    "wheel",
+    "prize",
+    "spin",
+    "game",
+    "component",
+    "typescript"
+  ],
+  "author": "SensitiveWebUser",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SensitiveWebUser/react-prize-wheel.git",
+    "directory": "packages/react-prize-wheel"
+  },
+  "bugs": {
+    "url": "https://github.com/SensitiveWebUser/react-prize-wheel/issues"
+  },
+  "homepage": "https://github.com/SensitiveWebUser/react-prize-wheel#readme",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@size-limit/preset-small-lib": "^11.0.1",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/coverage-v8": "^1.0.4",
+    "jsdom": "^26.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^4.7.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "size-limit": "^11.0.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "vitest": "^1.0.4"
+  },
+  "size-limit": [
+    {
+      "path": "dist/index.js",
+      "limit": "50 KB"
+    },
+    {
+      "path": "dist/index.esm.js",
+      "limit": "50 KB"
+    }
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

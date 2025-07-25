@@ -1,48 +1,53 @@
-import { defineConfig } from "vite";
-import { extname, relative, resolve } from "path";
-import { fileURLToPath } from "node:url";
-import { glob } from "glob";
-import react from "@vitejs/plugin-react";
-import dts from "vite-plugin-dts";
-import { libInjectCss } from "vite-plugin-lib-inject-css";
+import { resolve } from 'node:path';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [
-		react(),
-		libInjectCss(),
-		dts({
-			tsconfigPath: resolve(__dirname, "tsconfig.lib.json"),
-		}),
-	],
-	build: {
-		copyPublicDir: true, // Ensure this is set to true
-		lib: {
-			entry: resolve(__dirname, "lib/main.ts"),
-			formats: ["es"],
-		},
-		rollupOptions: {
-			external: ["react", "react/jsx-runtime"],
-			input: Object.fromEntries(
-				// https://rollupjs.org/configuration-options/#input
-				glob
-					.sync("lib/**/*.{ts,tsx}", {
-						ignore: ["lib/**/*.d.ts"],
-					})
-					.map((file) => [
-						// 1. The name of the entry point
-						// lib/nested/foo.js becomes nested/foo
-						relative("lib", file.slice(0, file.length - extname(file).length)),
-						// 2. The absolute path to the entry file
-						// lib/nested/foo.ts becomes /project/lib/nested/foo.ts
-						fileURLToPath(new URL(file, import.meta.url)),
-					]),
-			),
-			output: {
-				assetFileNames: "assets/[name][extname]",
-				entryFileNames: "[name].js",
-			},
-		},
-	},
-	publicDir: "public", // Ensure this is set to the public directory
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+    },
+  },
+  build: {
+    lib: {
+      entry: resolve(__dirname, 'src/index.ts'),
+      name: 'ReactPrizeWheel',
+      formats: ['es', 'umd'],
+      fileName: format => `index.${format}.js`,
+    },
+    rollupOptions: {
+      external: ['react', 'react-dom'],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
+      },
+    },
+    sourcemap: true,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'src/test/',
+        'src/**/*.stories.tsx',
+        'src/**/*.test.tsx',
+        'src/types/',
+      ],
+    },
+  },
 });
