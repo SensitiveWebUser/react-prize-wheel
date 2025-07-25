@@ -14,7 +14,7 @@
     "check:fix": "biome check --write ."
   },
   "dependencies": {
-    "@sensitiveweb/react-prize-wheel": "workspace:*",
+    "react-prize-wheel": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

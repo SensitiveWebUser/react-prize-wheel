@@ -1,4 +1,4 @@
-import { type SpinResult, SpinWheel, type WheelSegment } from '@sensitiveweb/react-prize-wheel';
+import { type SpinResult, SpinWheel, type WheelSegment } from 'react-prize-wheel';
 import { useState } from 'react';
 import { Documentation } from './components/Documentation';
 

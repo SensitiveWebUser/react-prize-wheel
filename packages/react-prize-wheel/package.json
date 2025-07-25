@@ -1,5 +1,5 @@
 {
-  "name": "@sensitiveweb/react-prize-wheel",
+  "name": "react-prize-wheel",
   "version": "2.0.0",
   "type": "module",
   "description": "A simple, performant React prize wheel component",
